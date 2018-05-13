@@ -43,7 +43,7 @@ Segmentation fault
 
 ## Rust solution
 
-> Rust _avoids_ the need for _GC_ through:
+Rust _avoids_ the need for _GC_ through:
 
 * ownership 
 * borrowing
@@ -183,6 +183,4 @@ once at a time
 
 ---
 
-## To conclude
-
-<p>It's more <span style="color:orange;"> safety</span> !! </p><!-- .element class="big" -->
+<p>It's more <span style="color:orange;"> safe </span>at runtime !! </p><!-- .element class="big" -->
