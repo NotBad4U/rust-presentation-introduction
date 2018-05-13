@@ -121,9 +121,6 @@ fn main() {
 ## Structures (`struct`)
 
 ```rust
-#[derive(Copy, Clone, Debug)]
-struct Data(i32, i32);
-
 struct Task {
     id: i64,
     data: Data,
@@ -141,43 +138,6 @@ impl Task {
 ```
 
 [examples_struct.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_struct.rs)
-
-Note:
-* `struct` => data container
-* `impl` => "method"
-* `self` => instance function
-* else  => "associated" (static) function
-
----
-
-## Type set (`enum`)
-
-```rust
-enum Person {
-    Anonymous,
-    Natural { last_name: String, first_name: String },
-    Company { name: String, owners: Vec<Person> },
-    Association(String),
-}
-
-impl Person {
-   fn display(self) {
-      match self {
-         Person::Anonymous => println!("I am no one"),
-         Person::Natural { last_name, first_name } =>
-            println!("Hello, my name is {} {}", first_name, last_name),
-         Person::Company { name, .. } => println!("$$$ {} $$$", name),
-         Person::Association(nom) => println!("❤❤❤ {} ❤❤❤", nom)
-      }
-   }
-}
-```
-
-[examples_enum.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_enum.rs)
-
-Note:
-* Finite variant set
-* Variants are `struct`-like
 
 ---
 
@@ -239,23 +199,3 @@ Note:
 * (+ Java) advanced inference
 * (+ Java) no reification => static dispatch
 * (+ Java) many implementations
-
----
-
-## Generic
-
-```rust
-#[derive(Clone, Debug)]
-struct Hours;
-struct Speed<D, T=Hours>(Distance<D>, T);
-
-impl< DT , DS,S >  Adaptable<Speed<DT,S>>  for  Speed<DS,S>  where
-   Distance<DS>: Adaptable<Distance<DT>>,
-   S: Clone {
-        fn adapt(self) -> Speed<DT,S> {
-            Speed(self.0.adapt(), self.1.clone())
-        }
-}
-```
-
-[examples_generic.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_generic.rs)
