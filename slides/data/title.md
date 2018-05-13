@@ -6,6 +6,10 @@
 
 <!-- .element: style="overflow: hidden;" -->
 
+Alessio Coltellacci  [@lightplay8](https://twitter.com/lightplay8)
+
+![Clever Cloud logo](assets/img/clever_cloud_logo.svg)
+
 ---
 
 ## _Disclaimer_
