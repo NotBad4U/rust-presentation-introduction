@@ -66,28 +66,3 @@ pub fn append<K, V>(&mut self, key: K, value: V) where
 ````
 
 [hyper/src/header/common/cookie.rs](https://github.com/hyperium/hyper/blob/1059eb349a560a4b9b83181acd9db19d1ef42073/src/header/common/cookie.rs)
-
-
----
-
-## Test frameworks
-
-[e.g. stainless](https://github.com/reem/stainless)
-
-``` rust
-    describe! addition {
-        before_each {
-            let x = 5;
-            let y = 6;
-        }
-
-        it "should add 5 and 6 together" {
-            assert_eq!(x + y, 11);
-        }
-
-        after_each {
-            assert_eq!(x, 5);
-            assert_eq!(y, 6);
-        }
-    }
-```

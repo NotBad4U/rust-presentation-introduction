@@ -10,18 +10,15 @@
 
 ## **A**bstract **S**yntax **T**ree
 
-<pre><code data-trim data-noescape class="rust">
+```rust
 macro_rules! new_macro {
-    <i class="h3">(</i><i class="h1">x => $e: expr</i><i class="h3">)</i> => <i class="h3">(</i><i class="h2">println!("mode X: {}", $e)</i><i class="h3">)</i>;
+
+    ($e: expr) => (println!("res = {}", $e));
+
 }
-new_macro!<i class="h3">(</i><i class="h4">x => 2 + 2</i><i class="h3">)</i>
-</pre></code>
 
-<i class="h1">rules</i> consists in pattern-matching tokens 
-
-<i class="h2">expansion</i> generates new tokens (not code !)
-
-<i class="h3">delimiter</i> can be `()`, `{}`, `[]` for <i class="h4">invocation</i>, <i class="h1">rules</i>, and <i class="h2">expansion</i>
+new_macro!(2 + 2)
+```
 
 Note:
 * AST-based ⇒ both call and definition must be parsable 
@@ -43,3 +40,23 @@ Note:
 | `ty` | ⇒ type
 | `meta` | ⇒ attribute content (i.e. `#[...]`)
 <!-- .element class="headless compact" -->
+
+---
+
+## _vec!_ macro
+
+```rust
+macro_rules! vec {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
+
+====> vec![1, 2 , 3]
+```

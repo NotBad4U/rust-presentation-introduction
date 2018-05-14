@@ -11,7 +11,7 @@
 
 ### Librairies - Asynchrone
 
-[Rayon](https://github.com/nikomatsakis/rayon)
+☀ [Rayon](https://github.com/nikomatsakis/rayon)
 
 ```rust
 extern crate rayon;

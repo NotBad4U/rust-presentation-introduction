@@ -103,17 +103,21 @@ error[E0382]: use of moved value: \`m\`
 
 ## Message passing
 
-> Do not communicate by sharing memory; instead, share memory by communicating. - Effective Go
+> Do not communicate by sharing memory; instead, share memory by communicating.
+
+> \- Effective Go
 
 ---
 
 ## Channel API
 
-[(Rust's standard library)](https://static.rust-lang.org/doc/master/std/sync/mpsc/index.html)
-
 ```rust
 fn send<T: Send>(chan: &Channel<T>, t: T);
+        ^^^^^^^                    ^^^^^^^
+
+
 fn recv<T: Send>(chan: &Channel<T>) -> T;
+        ^^^^^^^
 ```
 
 > _T_ must be considered _safe_ to send between threads
@@ -124,13 +128,14 @@ Actor
 
 ---
 
-## [Channel](https://doc.rust-lang.org/std/sync/mpsc/fn.channel.html)
+## [Channel](https://doc.rust-lang.org/std/sync/mpsc/fn.channel.html): MPSC
 
 ```rust
 let (tx1, rx) = mpsc::channel();
 let tx2 = tx1.clone();
 
 thread::spawn(move || tx1.send(vec![1, 2]));
+
 thread::spawn(move || tx2.send(vec![3, 4]));
 
 for scores in rx {
