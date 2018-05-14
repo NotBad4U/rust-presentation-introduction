@@ -8,8 +8,7 @@
 /tmp/**
 /node_modules/
 /.sass-cache
-/css/reveal.min.css
 /css/reveal.css
 /css/theme/*.css
-/js/reveal.min.js
+!/css/theme/white_remastered.css
 bower_components/*
