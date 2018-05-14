@@ -1,6 +1,6 @@
 {
-  "name": "Tomorrow I stop coffee I get to crab",
-  "version": "2.0",
+  "name": "rust-intro",
+  "version": "2.0.0",
   "main": "js/reveal.js",
   "scripts": {
     "test": "grunt test",
