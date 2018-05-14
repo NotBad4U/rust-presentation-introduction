@@ -118,7 +118,7 @@ fn main() {
 
 ---
 
-## Structures (`struct`)
+## Structure
 
 ```rust
 struct Task {
@@ -127,8 +127,8 @@ struct Task {
 }
 
 impl Task {
-    fn new(id: i64, data: Data) -> Task {
-        Task { id, data }
+    fn new(id: i64, data: Data) -> Self {
+        Self { id, data }
     }
 
     fn data(self) -> Data {
@@ -137,65 +137,110 @@ impl Task {
 }
 ```
 
-[examples_struct.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_struct.rs)
-
----
-
-## Contract (`trait`)
-
-```rust
-impl std::ops::Add for Data {
-    type Output = Data;
-
-    fn add(self, rhs: Data) -> Data {
-        Data(self.0 + rhs.0, self.1 + rhs.1)
-    }
-}
-
-println!("{:?}", Data(1,2) + Data(4,8));
-```
-
-[examples_trait.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_trait.rs)
-
-Note:
-* (= Java) no attributes
-* (= Java) default method implementation
-* (~ Java) inheritance (_composition over inheritance_)
-* (+ Java) static methods
-* (+ Java) operator overriding
-
 ---
 
 ## Generic
 
 ```rust
-struct Km; struct Mi;
-struct Distance<T>(u32, T);
-
-trait Adaptable<T> {
-   fn adapt(self) -> T;
+struct Task<D> {
+    id: i64,
+    data: D,
 }
 
-impl Adaptable<Distance<Mi>> for Distance<Km> {
-   fn adapt(self) -> Distance<Mi> {
-      Distance(self.0 * 13 / 21, Mi)
-   }
-}
+impl <D>Task<D> {
+    fn new(id: i64, data: D) -> Self {
+        Self { id, data }
+    }
 
-impl Adaptable<Distance<Km>> for Distance<Mi> {
-   fn adapt(self) -> Distance<Km> {
-      Distance(self.0 * 21 / 13, Km)
-   }
+    fn data(self) -> D {
+        self.data
+    }
 }
 ```
 
-[examples_generic.rs](https://github.com/loganmzz/rust-presentation-introduction/blob/master/examples/src/bin/examples_generic.rs)
+NOTE:
+no constructor pattern
 
-Note:
-* C++-like template
-* Static dispatch*
+---
 
-* (- Java) no inheritance => no variance
-* (+ Java) advanced inference
-* (+ Java) no reification => static dispatch
-* (+ Java) many implementations
+#### Traits: Defining Shared Behavior
+
+``` rust
+pub trait Summary {
+    fn summarize(&self) -> String;
+}
+
+pub struct Article {
+    pub author: String,
+    pub content: String,
+}
+
+impl Summary for Article {
+    fn summarize(&self) -> String {
+        format!("{}", self.content)
+    }
+}
+
+pub struct Tweet { ... }
+
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        ...
+    }
+}
+```
+
+---
+
+### Implementing same trait multiple times
+
+```rust
+enum StateMachine {
+    StateA{ data: i32 },
+    StateB{ id: String},
+}
+
+struct EventB{ data: i32 }
+struct EventA{ id: String}
+
+impl From<EventB> for StateMachine {
+    fn from(event: EventB) -> Self {
+        StateMachine::StateA{ data: event.data }
+    }
+}
+
+impl From<EventA> for StateMachine {
+    fn from(event: EventA) -> Self {
+        StateMachine::StateB{ id: event.id }
+    }
+}
+```
+
+NOTE:
+No erasure
+
+---
+
+## Closure
+
+```rust
+let plus_one = |x: i32| { x + 1 };
+
+plus_one(1);
+```
+
+---
+
+## Higher-order function
+
+```rust
+fn call_with_one(some_closure: &Fn(i32) -> i32) -> i32 {
+    some_closure(1)
+}
+
+call_with_one(&|x: i32| x + 1);
+```
+
+---
+
+## Multi-paradigm language
