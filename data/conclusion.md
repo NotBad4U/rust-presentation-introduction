@@ -35,4 +35,8 @@ Shipped in Firefox (start with version 48) <!-- .element: style="margin-top:5%" 
 
 ---
 
-<!-- .slide: data-background="assets/img/love_me.gif" -->
+![love_me](assets/img/love_me.gif)
+
+Coupon Clever Cloud: *rivieradev2018*
+
+[https://notbad4u.github.io/rust-talk/](https://notbad4u.github.io/rust-talk/)
