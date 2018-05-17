@@ -117,22 +117,22 @@ error[E0382]: use of moved value: `events`
 
 ---
 
-## Borrowing &T
+## Borrowing *&T*
 
 Many reader, no writers
 
-``` rust
+<pre><code data-trim data-noescape class="rust">
 fn read_events() {
     let treasures = get_treasures(...); // take ownership
 
-    get_value_treasures(&treasures); //reader
-    get_date_treasures(&treasures); //reader
+    get_value_treasures(<span class="fragment highlight-mark">&treasures</span>); //reader
+    get_date_treasures(<span class="fragment highlight-mark">&treasures</span>); //reader
 }
 
-fn get_value_treasures(treasures: &Vec<Treasure>) {
+fn get_value_treasures(treasures: <span class="fragment highlight-mark">&</span>Vec<Treasure>) {
     // Can't modify the treasures here
 }
-```
+</code></pre>
 
 ---
 
@@ -140,19 +140,19 @@ fn get_value_treasures(treasures: &Vec<Treasure>) {
 
 Exactly _one mutable_ reference
 
-``` rust
+<pre><code data-trim data-noescape class="rust">
 let mut treasures = get_treasures(...); // take ownership
 
-let t1 = &mut treasures;
+let t1 = <span class="fragment highlight-mark">&mut</span> treasures;
 modify_values_treasures(t1);
 
-let t2 = &mut treasures;
+let t2 = <span class="fragment highlight-mark">&mut</span> treasures;
 modify_owner_treasures(t2);
 
-fn get_value_treasures(treasures: &mut Vec<Treasures>) {
-    // Increase the number of golds
+fn get_value_treasures(treasures: <span class="fragment highlight-mark">&mut</span> Vec<Treasures>) {
+    // Can mutate treasures
 }
-```
+</code></pre>
 
 ---
 
