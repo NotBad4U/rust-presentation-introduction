@@ -44,7 +44,30 @@ Here is an example of a data race that can lead to crashes and memory corruption
 
 ---
 
-> Go will happily compile and run the code above
+#### Go will happily compile and run the code above
+
+```
+$ go run -race main.go
+==================
+WARNING: DATA RACE
+Write at 0x00c420094150 by goroutine 6:
+  runtime.mapassign_faststr()
+      /snap/go/1880/src/runtime/hashmap_fast.go:694 +0x0
+  main.main.func1()
+      /home/escanor/Junk/test/main.go:9 +0x5d
+
+Previous write at 0x00c420094150 by main goroutine:
+  runtime.mapassign_faststr()
+      /snap/go/1880/src/runtime/hashmap_fast.go:694 +0x0
+  main.main()
+      /home/escanor/Junk/test/main.go:12 +0xc9
+
+Goroutine 6 (running) created at:
+  main.main()
+      /home/escanor/Junk/test/main.go:8 +0x9a
+Found 1 data race(s)
+==================
+```
 
 ---
 
