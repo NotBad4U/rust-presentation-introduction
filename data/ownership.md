@@ -177,3 +177,74 @@ once at a time
 ---
 
 <p>It's more <span style="color:orange;"> safe </span>at runtime !! </p><!-- .element class="big" -->
+
+---
+
+## Everything is done by the Borrow Checker
+
+[src/librustc_borrowck/borrowck](https://github.com/rust-lang/rust/tree/master/src/librustc_borrowck/borrowck)
+
+1. Set *formal rules*
+2. `gather_loans`
+3. `check_loans`
+
+---
+
+### Formal rules
+
+```
+PREDICATE(X, Y, Z)
+  Condition 1
+  Condition 2
+  Condition 3
+```
+
+---
+
+Example: Checking mutability of variables
+
+``` prolog
+MUTABILITY(X, MQ)                   // M-Var-Mut
+  DECL(X) = mut
+
+MUTABILITY(X, imm)                  // M-Var-Imm
+  DECL(X) = imm
+
+MUTABILITY(P.f, MQ)                 // M-Field
+  MUTABILITY(P, MQ)
+```
+
+---
+
+```rust
+fn check_mutability<'a, 'tcx>(bccx: &BorrowckCtxt<'a, 'tcx>,
+                              borrow_span: Span,
+                              cause: AliasableViolationKind,
+                              cmt: &mc::cmt_<'tcx>,
+                              req_kind: ty::BorrowKind)
+                              -> Result<(),()> {
+     match req_kind {
+        ty::UniqueImmBorrow | ty::ImmBorrow => {
+            match cmt.mutbl {
+                 mc::McImmutable | mc::McDeclared | mc::McInherited => {
+                     Ok(())
+                }
+            }
+        }
+
+        ty::MutBorrow => {
+            // Only mutable data can be lent as mutable.
+            if !cmt.mutbl.is_mutable() {
+                Err(bccx.report(BckError { span: borrow_span,
+                                           cause,
+                                           cmt,
+                                           code: err_mutbl }))
+            } else {
+                Ok(())
+            }
+        }
+    }
+}
+```
+
+[check_mutability](https://github.com/rust-lang/rust/blob/e471c206cf472b54acee83a231560e16c439ab63/src/librustc_borrowck/borrowck/gather_loans/mod.rs#L206)
