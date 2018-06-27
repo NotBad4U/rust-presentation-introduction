@@ -75,13 +75,6 @@ fn transform_events(<span class="fragment highlight-mark">events</span>: Vec<Eve
 } <span class="fragment strong">◀️ free memory allocation events</span>
 </code></pre> 
 
-
----
-
-## Ownership
-
-![vec_ownership](assets/img/ownership_events_example.svg) <!-- .element: width="70%" style="background-color:white;" -->
-
 ---
 
 ## Ownership
